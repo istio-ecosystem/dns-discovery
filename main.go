@@ -5,13 +5,15 @@ import (
 )
 
 type flags struct {
-	apply                 bool
-	clusterConfigFilePath string
+	apply              bool
+	kubeConfigFilePath string
+	zones              string
+	forward            string
 }
 
 func main() {
 
-	_ := parseFlags()
+	parseFlags()
 
 }
 
@@ -19,8 +21,10 @@ func parseFlags() *flags {
 
 	flags := flags{}
 
-	flag.BoolVar(&flags.apply, "apply", false, "Automatically apply generated ServiceEntry to kubeernetes")
-	flag.StringVar(&flags.clusterConfigFilePath, "cluster.config.path", "", "Kubernetes cluster config file path (needed only when apply=true)")
+	flag.BoolVar(&flags.apply, "apply", false, "Automatically apply generated ServiceEntry to kubernetes")
+	flag.StringVar(&flags.kubeConfigFilePath, "kubeconfig.path", "", "Kubernetes cluster config file path (needed only when apply=true)")
+	flag.StringVar(&flags.zones, "zones", "", "Kubernetes authoritative zones")
+	flag.StringVar(&flags.forward, "forward", "", "DNS server address")
 
 	flag.Parse()
 	return &flags

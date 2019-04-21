@@ -4,11 +4,14 @@ BINARY=istio-discovery
 DOCKER_REPO=tufin
 IMAGE=$(DOCKER_REPO)/istio-discovery
 
+clean:
+	rm $(BINARY)
+
 build:
 	GOOS=linux GOARCH=amd64 go build -o .dist/$(BINARY)
 
-clean:
-	rm $(BINARY)
+test:
+    go test `go list ./...`
 
 docker:
 	docker build --build-arg=binary=$(BINARY) -t $(IMAGE) -f docker/Dockerfile .dist

@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  istio-discovery:
+  build:
     working_directory: /go/src/github.com/tufin/istio-discovery
     docker:
       - image: circleci/golang

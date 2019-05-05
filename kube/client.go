@@ -18,7 +18,6 @@ func New() (*Client, error) {
 
 	rc, err := rest.RESTClientFor(config)
 	if err != nil {
-
 		return nil, err
 	}
 

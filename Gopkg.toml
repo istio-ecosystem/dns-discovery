@@ -20,3 +20,6 @@
 
 [prune]
   go-tests = true
+[[constraint]]
+  name = "github.com/stretchr/testify"
+  version = "1.3.0"

@@ -60,3 +60,28 @@ func TestServer(t *testing.T) {
 	require.Equal(t, "google.com.", r.Answer[0].Header().Name)
 	require.Len(t, sec.created, 1)
 }
+
+func TestServerLocalAddress(t *testing.T) {
+	sec := &fakeServiceEntryCreator{}
+	proxy := NewServer(&fakeExchanger{dnsMap: map[string]string{"google.com": "1.2.3.4"}},
+		sec,
+		[]string{".cluster.local"})
+
+	started := make(chan struct{})
+	proxy.Start(":60654", "udp", func() {
+		started <- struct{}{}
+	})
+
+	defer proxy.Stop()
+	<-started
+	c, m := dns.Client{Net: "udp"}, &dns.Msg{}
+	m.SetQuestion("my.svc.cluster.local.", dns.TypeA)
+
+	_, _, err := c.Exchange(m, "127.0.0.1:60654")
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	require.Len(t, sec.created, 0)
+}

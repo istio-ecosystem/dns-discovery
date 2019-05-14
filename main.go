@@ -23,8 +23,8 @@ type flags struct {
 
 func main() {
 
-	stop := make(chan os.Signal)
-	signal.Notify(stop, syscall.SIGSTOP, syscall.SIGTERM)
+	sig := make(chan os.Signal)
+	signal.Notify(sig, syscall.SIGSTOP, syscall.SIGTERM)
 
 	flags := parseFlags()
 
@@ -35,12 +35,12 @@ func main() {
 	}
 
 	server := dns.NewServer(dns.NewProxy(flags.forward), istio.New(), zones)
-	server.Start(flags.address, "udp")
-	log.Infof("listening on %s", flags.address)
+	server.Start(flags.address, "udp", func() {
+		log.Infof("listening on %s", flags.address)
+	})
+
 	defer server.Stop()
-
-	<-stop
-
+	<-sig
 }
 
 func parseFlags() *flags {

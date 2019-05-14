@@ -14,12 +14,12 @@ import (
 )
 
 type Server struct {
-	*dns.ServeMux
+	server         *dns.Server
+	mux            *dns.ServeMux
 	serviceEntryCh chan *v1alpha3.ServiceEntry
 	serEntList     *v1alpha3.ServiceEntryList
 	exchanger      Exchanger
 	creator        istio.ServiceEntryCreator
-	stop           chan struct{}
 }
 
 func NewServer(exchanger Exchanger, creator istio.ServiceEntryCreator, kubeZones []string) *Server {
@@ -27,26 +27,28 @@ func NewServer(exchanger Exchanger, creator istio.ServiceEntryCreator, kubeZones
 	server := &Server{exchanger: exchanger,
 		creator:        creator,
 		serviceEntryCh: make(chan *v1alpha3.ServiceEntry),
-		serEntList:     new(v1alpha3.ServiceEntryList), ServeMux: dns.NewServeMux()}
+		serEntList:     new(v1alpha3.ServiceEntryList), mux: dns.NewServeMux()}
 
 	stopDrain := make(chan struct{})
 	go server.drain(stopDrain)
 
 	for _, zone := range kubeZones {
-		server.ServeMux.HandleFunc(zone, server.forward)
+		server.mux.HandleFunc(zone, server.forward)
 	}
 
-	server.ServeMux.HandleFunc(".", server.createAndForward)
+	server.mux.HandleFunc(".", server.createAndForward)
 
 	return server
 }
 
-func (s *Server) Start(address, network string) {
-	go dns.ListenAndServe(address, network, s.ServeMux)
+func (s *Server) Start(address, network string, onStart func()) {
+	s.server = &dns.Server{Addr: address, Net: network, Handler: s.mux}
+	s.server.NotifyStartedFunc = onStart
+	go s.server.ListenAndServe()
 }
 
 func (s *Server) Stop() {
-	s.stop <- struct{}{}
+	s.server.Shutdown()
 }
 
 func (s *Server) drain(stop chan struct{}) {
@@ -64,11 +66,10 @@ func (s *Server) drain(stop chan struct{}) {
 
 func (s *Server) forward(w dns.ResponseWriter, r *dns.Msg) {
 	if res, err := s.exchanger.Exchange(r); err != nil {
-		log.Info(err)
+		log.Error(err)
 	} else {
-		log.Info(res)
 		w.WriteMsg(res)
-		log.Info("after")
+
 	}
 
 }

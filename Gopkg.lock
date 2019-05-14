@@ -100,6 +100,12 @@
   version = "1.0.1"
 
 [[projects]]
+  name = "github.com/pmezard/go-difflib"
+  packages = ["difflib"]
+  revision = "792786c7400a136282c1664665ae0a8db921c6c2"
+  version = "v1.0.0"
+
+[[projects]]
   name = "github.com/sirupsen/logrus"
   packages = ["."]
   revision = "8bdbc7bcc01dcbb8ec23dc8a28e332258d25251f"
@@ -110,6 +116,24 @@
   packages = ["."]
   revision = "298182f68c66c05229eb03ac171abe6e309ee79a"
   version = "v1.0.3"
+
+[[projects]]
+  name = "github.com/stretchr/objx"
+  packages = ["."]
+  revision = "477a77ecc69700c7cdeb1fa9e129548e1c1c393c"
+  version = "v0.1.1"
+
+[[projects]]
+  name = "github.com/stretchr/testify"
+  packages = [
+    ".",
+    "assert",
+    "http",
+    "mock",
+    "require"
+  ]
+  revision = "ffdc059bfe9ce6a4e144ba849dbedead332c6053"
+  version = "v1.3.0"
 
 [[projects]]
   branch = "master"
@@ -302,7 +326,7 @@
     "pkg/watch",
     "third_party/forked/golang/reflect"
   ]
-  revision = "17f84483f50094cc9bb94364a06f4776c1aa9a3f"
+  revision = "1f207b29b4411fb6ecfd342ae73fa60a921a5046"
 
 [[projects]]
   branch = "master"
@@ -353,6 +377,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "40f3ab08273140df3ef85d5636c1672dbe8c86ad5cb264b1ade26a5960500b58"
+  inputs-digest = "0f25c9b38795ef5c79b2e0ada4dde07371f167c28b2380bf6509e79feff8d37a"
   solver-name = "gps-cdcl"
   solver-version = 1

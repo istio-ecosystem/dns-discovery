@@ -10,15 +10,7 @@ spec:
         - "-zones=svc.cluster.local,cluster.local"
         - "-forward=0.0.0.0:53"
         - "-address=:54"
-        - "-autoApply=true"
         ports:
         - containerPort: 54
           name: dns
           protocol: UDP
-        livenessProbe:
-          exec:
-            command:
-            - cat
-            - /tmp/healthy
-            initialDelaySeconds: 5
-            periodSeconds: 5

@@ -79,8 +79,17 @@ func (s *Server) createAndForward(w dns.ResponseWriter, r *dns.Msg) {
 	go func() {
 		var hosts []string
 		for _, q := range r.Question {
+			question := strings.TrimRight(q.Name, ".")
+			if len(dns.SplitDomainName(question)) <= 1 {
+				continue
+			}
 			hosts = append(hosts, strings.TrimRight(q.Name, "."))
 		}
+
+		if len(hosts) == 0 {
+			return
+		}
+
 		s.serviceEntryCh <- &v1alpha3.ServiceEntry{
 			ObjectMeta: metav1.ObjectMeta{Name: hosts[0]},
 			TypeMeta:   metav1.TypeMeta{Kind: "ServiceEntry", APIVersion: "networking.istio.io/v1alpha3"},

@@ -65,7 +65,7 @@ func TestServerLocalAddress(t *testing.T) {
 	sec := &fakeServiceEntryCreator{}
 	proxy := NewServer(&fakeExchanger{dnsMap: map[string]string{"google.com": "1.2.3.4"}},
 		sec,
-		[]string{".cluster.local"})
+		[]string{"cluster.local."})
 
 	started := make(chan struct{})
 	proxy.Start(":60654", "udp", func() {

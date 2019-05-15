@@ -83,5 +83,12 @@ func TestServerLocalAddress(t *testing.T) {
 		t.Fatal(err)
 	}
 
+	m.SetQuestion("myservice.", dns.TypeA)
+	_, _, err = c.Exchange(m, "127.0.0.1:60654")
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
 	require.Len(t, sec.created, 0)
 }

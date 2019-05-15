@@ -79,6 +79,10 @@ func (s *Server) createAndForward(w dns.ResponseWriter, r *dns.Msg) {
 	go func() {
 		var hosts []string
 		for _, q := range r.Question {
+			question := strings.TrimRight(q.Name, ".")
+			if len(dns.SplitDomainName(question)) <= 1 {
+				continue
+			}
 			hosts = append(hosts, strings.TrimRight(q.Name, "."))
 		}
 		s.serviceEntryCh <- &v1alpha3.ServiceEntry{

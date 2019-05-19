@@ -5,9 +5,15 @@
 istio-discovery automatically detects egress traffic from Kubernetes cluster and assigns a matching ServiceEntry object for each host. It creates better visibility in the cluster traffic, allowing cluster operators impose better security boundaries in their security policy.
 
 ### Installation
+#### Mac
 ```sh
 $ make install
 ```
+#### Linux
+```sh
+$ ./deploy.sh
+```
+
 ### Building
 ```sh
 $ make build && make docker

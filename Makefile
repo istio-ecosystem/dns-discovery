@@ -27,7 +27,7 @@ install:
 		exit 1;\
 	fi
 	@echo patching "$(DNS_DEPLOYMENT)"
-	@kubectl patch deploy -n kube-system ${DNS_DEPLOYMENT} -p "`<kubernetes/deploy_patch.yaml`"
+	@kubectl patch deploy -n kube-system $(DNS_DEPLOYMENT) -p "`<kubernetes/deploy_patch.yaml`"
 	@kubectl patch svc -n kube-system kube-dns -p "`<kubernetes/service_patch.yaml`"
 	@kubectl patch clusterrole system:$(DNS_DEPLOYMENT) -p "`sed "s/#DEPLOYMENT#/$(DNS_DEPLOYMENT)/g" kubernetes/clusterrole.yaml`"
 

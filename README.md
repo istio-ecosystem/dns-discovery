@@ -8,7 +8,7 @@ istio-discovery automatically detects egress traffic from Kubernetes cluster and
 ```sh
 $ make install
 ```
-#### Building
+### Building
 ```sh
 $ make build && make docker
 ```

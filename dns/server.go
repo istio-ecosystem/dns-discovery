@@ -56,7 +56,9 @@ func (s *Server) drain(stop chan struct{}) {
 	for {
 		select {
 		case se := <-s.serviceEntryCh:
-			s.creator.Create(se)
+			if err := s.creator.Create(se); err != nil {
+				log.Debug(err)
+			}
 		case <-stop:
 			break
 		}
@@ -75,7 +77,7 @@ func (s *Server) forward(w dns.ResponseWriter, r *dns.Msg) {
 }
 
 func (s *Server) createAndForward(w dns.ResponseWriter, r *dns.Msg) {
-
+	log.Debugf("%+v", r.Question)
 	go func() {
 		var hosts []string
 		for _, q := range r.Question {

@@ -16,9 +16,10 @@ import (
 )
 
 type flags struct {
-	address string
-	zones   string
-	forward string
+	address  string
+	zones    string
+	forward  string
+	loglevel string
 }
 
 func main() {
@@ -50,6 +51,7 @@ func parseFlags() *flags {
 	flag.StringVar(&flags.address, "address", "localhost:53", "Listen address (ip:port)")
 	flag.StringVar(&flags.zones, "zones", "", "Kubernetes authoritative zones")
 	flag.StringVar(&flags.forward, "forward", "", "DNS server address (required)")
+	flag.StringVar(&flags.loglevel, "loglevel", "info", "set log level")
 
 	flag.Parse()
 
@@ -58,5 +60,15 @@ func parseFlags() *flags {
 		os.Exit(1)
 	}
 
+	setLogLevel(flags.loglevel)
+
 	return &flags
+}
+
+func setLogLevel(levelname string) {
+	level, err := log.ParseLevel(levelname)
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.SetLevel(level)
 }

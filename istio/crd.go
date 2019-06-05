@@ -14,7 +14,7 @@ import (
 )
 
 type ServiceEntryCreator interface {
-	Create(se *v1alpha3.ServiceEntry)
+	Create(se *v1alpha3.ServiceEntry) error
 }
 
 type CrdCreator struct {
@@ -35,6 +35,7 @@ func New() *CrdCreator {
 	return &CrdCreator{istioClient: istioClient}
 }
 
-func (c CrdCreator) Create(se *v1alpha3.ServiceEntry) {
-	c.istioClient.NetworkingV1alpha3().ServiceEntries(v1.NamespaceDefault).Create(se)
+func (c CrdCreator) Create(se *v1alpha3.ServiceEntry) error {
+	_, err := c.istioClient.NetworkingV1alpha3().ServiceEntries(v1.NamespaceDefault).Create(se)
+	return err
 }

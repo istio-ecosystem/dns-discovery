@@ -31,8 +31,9 @@ type fakeServiceEntryCreator struct {
 	created []*v1alpha3.ServiceEntry
 }
 
-func (f *fakeServiceEntryCreator) Create(se *v1alpha3.ServiceEntry) {
+func (f *fakeServiceEntryCreator) Create(se *v1alpha3.ServiceEntry) error {
 	f.created = append(f.created, se)
+	return nil
 }
 
 func TestServer(t *testing.T) {

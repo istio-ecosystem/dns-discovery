@@ -22,5 +22,4 @@ jobs:
       - run:
           name: Push Docker image
           command: |
-            set +x
             make deploy

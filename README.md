@@ -1,6 +1,6 @@
 # dns-discovery
 
-[![CircleCI](https://circleci.com/gh/istio-ecosystem/dns-discovery.svg?style=svg)](https://circleci.com/gh/istio-ecosystem/dns-discovery)
+[![CircleCI](https://circleci.com/gh/istio-ecosystem/dns-discovery/tree/master.svg?style=svg)](https://circleci.com/gh/istio-ecosystem/dns-discovery/tree/master)
 
 ## In a Nutshell 
 

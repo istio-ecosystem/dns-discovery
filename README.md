@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/istio-ecosystem/dns-discovery.svg?style=svg)](https://circleci.com/gh/istio-ecosystem/dns-discovery)
+
 # dns-discovery
 
 [![CircleCI](https://circleci.com/gh/Tufin/istio-discovery.svg?style=svg)](https://circleci.com/gh/Tufin/istio-discovery)

@@ -17,8 +17,7 @@ docker:
 	docker build --build-arg=binary=$(BINARY) -t $(IMAGE) -f docker/Dockerfile .dist
 
 deploy:
-    set +x
-	echo "$(DOCKER_PASS)" | docker login -u $(DOCKER_USER) --password-stdin
+	echo "$(DOCKER_PASS)" | docker login -u $(DOCKER_USER) --password-stdin >/dev/null 2>&1
 	docker push $(IMAGE)
 
 install:

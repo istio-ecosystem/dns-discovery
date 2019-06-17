@@ -32,3 +32,7 @@ install:
 	@kubectl patch clusterrole system:$(DNS_DEPLOYMENT) -p "`sed "s/#DEPLOYMENT#/$(DNS_DEPLOYMENT)/g" kubernetes/clusterrole.yaml`"
 
 
+uninstall:
+	$(eval DNS_DEPLOYMENT=$(shell kubectl get deploy -n kube-system -l k8s-app=kube-dns -o=custom-columns=NAME:.metadata.name | tail -n1 2>/dev/null))
+	@kubectl rollout undo deploy $(DNS_DEPLOYMENT) -n kube-system
+	@kubectl patch svc -n kube-system kube-dns -p "<`sed 's/54/53/g' kubernetes/service_patch.yaml`"

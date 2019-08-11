@@ -11,8 +11,8 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/tufin/istio-discovery/dns"
-	"github.com/tufin/istio-discovery/istio"
+	"github.com/istio-ecosystem/dns-discovery/dns"
+	"github.com/istio-ecosystem/dns-discovery/istio"
 )
 
 type flags struct {

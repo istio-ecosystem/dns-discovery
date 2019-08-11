@@ -3,12 +3,12 @@ package dns
 import (
 	"strings"
 
+	"github.com/istio-ecosystem/dns-discovery/istio"
 	"github.com/michaelkipper/istio-client-go/pkg/apis/networking/v1alpha3"
 	_ "github.com/michaelkipper/istio-client-go/pkg/client/clientset/versioned/typed/networking/v1alpha3"
 	log "github.com/sirupsen/logrus"
 
 	"github.com/miekg/dns"
-	"github.com/tufin/istio-discovery/istio"
 	istio_v1alpha3 "istio.io/api/networking/v1alpha3"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )

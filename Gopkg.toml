@@ -6,10 +6,6 @@
   name = "k8s.io/client-go"
   branch = "master"
 
-#[[constarint]]
-#  name = "k8s.io/api"
-#  branch = "master"
-#
 [[constraint]]
   name = "github.com/miekg/dns"
   version = "v1.1.8"

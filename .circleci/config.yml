@@ -1,7 +1,7 @@
 version: 2
 jobs:
   build:
-    working_directory: /go/src/github.com/tufin/istio-discovery
+    working_directory: /go/src/github.com/istio-ecosystem/dns-discovery
     docker:
       - image: circleci/golang
     steps:

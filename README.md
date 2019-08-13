@@ -40,3 +40,6 @@ $ make build && make docker
 ```
 ### Kubernetes Network Policies
 If you are restricting access to your DNS service with a Kubernetes network policy, please note that this will change the DNS pod to listen on UDP port 54 instead of the standard port 53 and you should update the policy. The DNS service continues to listen on the standard port UDP 53.
+
+## Changing Istio's Default Behavior for External End-Points
+https://istio.io/docs/tasks/traffic-management/egress/egress-control/#envoy-passthrough-to-external-services
